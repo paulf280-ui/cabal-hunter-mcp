@@ -1,0 +1,58 @@
+{
+  "name": "cabal-hunter-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for on-chain Solana cabal & rug detection — exit-liquidity risk verdict, funding-cluster + same-block-bundle + coordinated-dump detection, serial-rug deployer history, and honeypot check for any token mint. Run with npx, no API key. 250 free scans/month.",
+  "type": "module",
+  "bin": {
+    "cabal-hunter-mcp": "index.js"
+  },
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "mcp-server",
+    "solana",
+    "rug-check",
+    "rug-detection",
+    "rugcheck",
+    "cabal-detection",
+    "memecoin",
+    "pump-fun",
+    "pumpfun",
+    "token-safety",
+    "honeypot-detection",
+    "exit-liquidity",
+    "trading-bot",
+    "ai-agent",
+    "ai-agents",
+    "web3",
+    "defi",
+    "claude",
+    "cursor",
+    "elizaos"
+  ],
+  "license": "MIT",
+  "author": "Cabal-Hunter (https://api.cabal-hunter.com)",
+  "homepage": "https://api.cabal-hunter.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulf280-ui/cabal-hunter-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/paulf280-ui/cabal-hunter-mcp/issues"
+  }
+}
