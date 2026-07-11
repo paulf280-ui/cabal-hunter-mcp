@@ -8,6 +8,8 @@
 [![Free tier](https://img.shields.io/badge/250%2Fmo%20free-no%20API%20key-10b981)](https://api.cabal-hunter.com/api/info)
 [![License: MIT](https://img.shields.io/badge/license-MIT-94a3b8)](LICENSE)
 
+> 🌐 **Available in 9 languages:** [English](https://api.cabal-hunter.com/) · [Español](https://api.cabal-hunter.com/es) · [Português](https://api.cabal-hunter.com/pt) · [Français](https://api.cabal-hunter.com/fr) · [Deutsch](https://api.cabal-hunter.com/de) · [Nederlands](https://api.cabal-hunter.com/nl) · [中文](https://api.cabal-hunter.com/zh) · [日本語](https://api.cabal-hunter.com/ja) · [한국어](https://api.cabal-hunter.com/ko)
+
 Contract-clean is **not** cabal-clean. RugCheck-style scanners tell you the mint/freeze/LP are fine — they don't tell you that 15 wallets funded from one source are holding 30% of supply, waiting to dump on you. That's what this catches.
 
 ## Quick start
