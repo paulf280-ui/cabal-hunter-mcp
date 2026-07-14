@@ -90,17 +90,20 @@ Each cluster returns `wallet_count`, `bought_pct` (% of supply taken **at launch
 ```
 "clusters": [{
   "type": "early_sniper",
-  "wallet_count": 4,
-  "bought_pct": 49.4,     // took half the launch
-  "combined_pct": 0.0,    // and hold none of it now
-  "exited_count": 4,      // all four already sold
+  "wallet_count": 3,
+  "bought_pct": 12.5,     // share of supply taken at launch
+  "combined_pct": 0.0,    // what they still hold
+  "exited_count": 3,      // how many have already sold out
   "risk": "HIGH"
 }]
 ```
 
 **Read it like this:** if `bought_pct` is large and `exited_count == wallet_count`, a coordinated group took a big slice of the launch and has **already dumped it** — and a current-holder view would show you nothing, because they're gone.
 
-**Honest limitation:** this works best on **fresh launches**. On older or very heavily traded tokens the walk back may not resolve, and `status` returns `skipped_active_token` — that is *not* a clean verdict, it means we couldn't tell. Don't read it as safe.
+**Honest limitations — read these before you trust an output:**
+
+- This works best on **fresh launches**. On older or heavily traded tokens the walk back may not resolve, and `status` returns `skipped_active_token`. That is **not** a clean verdict — it means we couldn't tell. Don't read it as safe.
+- **False positives are possible and we have shipped one.** On 2026-07-14 this tool reported a token's own pump.fun bonding curve as a shared "funder" — because every seller receives SOL back from the curve, ordinary trading looked like a coordinated cluster. That specific bug is fixed (the token's own market addresses are now excluded), but the general lesson stands: **check that the reported `master_full` funder is a plain wallet and not an AMM, pool, router or bonding curve** before you act on a cluster. The `evidence_txs` are there so you can verify rather than trust.
 
 ## Pricing
 
