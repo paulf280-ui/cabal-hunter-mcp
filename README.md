@@ -1,11 +1,6 @@
 # cabal-hunter-mcp
 
-**On-chain Solana cabal & rug detection as an MCP server.** Two tools, called *before your agent buys*:
-
-- **`check_cabal_risk`** — scans any Solana token mint and returns an **Exit-Liquidity Risk** verdict (`SAFE | REVIEW | AVOID`), a 0–100 cabal score, funding-cluster detection, same-block Jito-bundle detection, coordinated-dump detection, serial-rug **deployer history** ("launched 14, 13 dead"), and a Solana-native **honeypot** check (freeze authority + Token-2022 traps).
-- **`trace_funding`** — the **pre-launch funding trace**: walks the token's **first** buyers back to the wallet that funded them, and flags when the **deployer funded the wallets that sniped their own launch**.
-
-Every flag links to its on-chain evidence transaction.
+**On-chain Solana cabal & rug detection as an MCP server.** One tool — `check_cabal_risk` — scans any Solana token mint *before your agent buys* and returns an **Exit-Liquidity Risk** verdict (`SAFE | REVIEW | AVOID`), a 0–100 cabal score, funding-cluster detection, same-block Jito-bundle detection, coordinated-dump detection, serial-rug **deployer history** ("launched 14, 13 dead"), and a Solana-native **honeypot** check (freeze authority + Token-2022 traps). Every flag links to its on-chain evidence transaction.
 
 [![npm](https://img.shields.io/npm/v/cabal-hunter-mcp?color=cb3837&logo=npm)](https://www.npmjs.com/package/cabal-hunter-mcp)
 [![MCP server](https://img.shields.io/badge/MCP-server-7c3aed)](https://api.cabal-hunter.com/mcp)
@@ -76,34 +71,13 @@ Prefer a remote HTTP server (no local process)? Point straight at the hosted end
 
 > "Before buying any token, call `check_cabal_risk` with the mint. If `recommendation` is `AVOID` or `cabal_score >= 65` or `honeypot_risk` is `HIGH`, skip the trade and say why."
 
-## `trace_funding({ mint })` — the pre-launch funding trace
+## A note on the withdrawn `trace_funding` tool
 
-Walks the token's **first** buyers back to the wallet that funded them. Flags two patterns:
+An earlier version of this README documented a second tool, `trace_funding`, that traced a token's first buyers back to their funding source.
 
-| Cluster type | What it means |
-|---|---|
-| `deployer_funded_sniper` | The **deployer** funded the wallets that sniped their own launch — the strongest pre-arranged-launch signal there is. |
-| `early_sniper` | 2+ of the first buyers were funded by the same **non-CEX** source. |
+**It has been withdrawn.** On measuring it properly we found that its headline detections were an artifact: the "shared funder" it reported was frequently the token's own pump.fun bonding curve. Every seller receives SOL back from the curve, so ordinary buying and selling was being reported as a coordinated cluster. After fixing that, the detector produced **zero genuine detections across 24 tokens**, and on live freshly-graduated tokens it could not complete the trace at all.
 
-Each cluster returns `wallet_count`, `bought_pct` (% of supply taken **at launch**), `combined_pct` (what they **still** hold), `exited_count` (how many already sold out), and `evidence_txs` (Solscan-verifiable).
-
-```
-"clusters": [{
-  "type": "early_sniper",
-  "wallet_count": 3,
-  "bought_pct": 12.5,     // share of supply taken at launch
-  "combined_pct": 0.0,    // what they still hold
-  "exited_count": 3,      // how many have already sold out
-  "risk": "HIGH"
-}]
-```
-
-**Read it like this:** if `bought_pct` is large and `exited_count == wallet_count`, a coordinated group took a big slice of the launch and has **already dumped it** — and a current-holder view would show you nothing, because they're gone.
-
-**Honest limitations — read these before you trust an output:**
-
-- This works best on **fresh launches**. On older or heavily traded tokens the walk back may not resolve, and `status` returns `skipped_active_token`. That is **not** a clean verdict — it means we couldn't tell. Don't read it as safe.
-- **False positives are possible and we have shipped one.** On 2026-07-14 this tool reported a token's own pump.fun bonding curve as a shared "funder" — because every seller receives SOL back from the curve, ordinary trading looked like a coordinated cluster. That specific bug is fixed (the token's own market addresses are now excluded), but the general lesson stands: **check that the reported `master_full` funder is a plain wallet and not an AMM, pool, router or bonding curve** before you act on a cluster. The `evidence_txs` are there so you can verify rather than trust.
+We would rather withdraw a feature than ship a detector that has never demonstrably detected anything. It may return if the approach can be made to work and its detection rate can be shown; until then it is not advertised and not billed.
 
 ## Pricing
 
