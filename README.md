@@ -12,7 +12,7 @@
 
 Contract-clean is **not** cabal-clean. A basic scanner tells you the mint/freeze/LP are fine — it doesn't tell you that 15 wallets funded from one source are holding 30% of supply, waiting to dump on you.
 
-**Credit where it's due:** [RugCheck](https://rugcheck.xyz) also does same-source wallet clustering (their "Insider Networks"), and it's a good tool — if it does what you need, use it. What `trace_funding` adds is the **pre-launch** angle: it walks back to the token's **first** buyers, so it still catches a coordinated group **even after they've sold and left a clean-looking holder list**. A current-holder view can't show you people who already left.
+**Credit where it's due:** [RugCheck](https://rugcheck.xyz) also does same-source wallet clustering (their "Insider Networks"), and it's a good tool — if it does what you need, genuinely, use it. What this gives you is one fused exit-liquidity verdict in a single call, at $9/month with no account.
 
 ## Quick start
 
