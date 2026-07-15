@@ -5,7 +5,7 @@
  * Exposes one tool, `check_cabal_risk`, that scans any Solana token mint and
  * returns an exit-liquidity risk verdict (SAFE / REVIEW / AVOID), a 0-100 cabal
  * score, funding-cluster + same-block-bundle + coordinated-dump detection,
- * serial-rug deployer history, and a honeypot (freeze / Token-2022) check.
+ * serial-launcher deployer history, and a honeypot (freeze / Token-2022) check.
  *
  * It is a thin stdio wrapper over the hosted Cabal-Hunter API
  * (https://api.cabal-hunter.com) so any MCP client — Claude Desktop, Claude
@@ -31,7 +31,7 @@ const TOOL = {
     "Solana token mint. One call returns an Exit-Liquidity Risk verdict " +
     "(SAFE | REVIEW | AVOID), a 0-100 cabal score, funding-cluster detection " +
     "(top holders funded by the same source), same-block Jito-bundle detection, " +
-    "coordinated-dump detection, serial-rug deployer history (e.g. 'launched 14, " +
+    "coordinated-dump detection, serial-launcher deployer history (e.g. 'launched 14, " +
     "13 dead'), a honeypot check (freeze authority + Token-2022 traps), and " +
     "on-chain evidence transactions for every flag. Use it before an agent buys a " +
     "pump.fun / PumpSwap / Raydium token to answer: are you the exit liquidity? " +

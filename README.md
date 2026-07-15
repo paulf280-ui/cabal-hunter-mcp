@@ -1,6 +1,6 @@
 # cabal-hunter-mcp
 
-**On-chain Solana cabal & rug detection as an MCP server.** One tool — `check_cabal_risk` — scans any Solana token mint *before your agent buys* and returns an **Exit-Liquidity Risk** verdict (`SAFE | REVIEW | AVOID`), a 0–100 cabal score, funding-cluster detection, same-block Jito-bundle detection, coordinated-dump detection, serial-rug **deployer history** ("launched 14, 13 dead"), and a Solana-native **honeypot** check (freeze authority + Token-2022 traps). Every flag links to its on-chain evidence transaction.
+**On-chain Solana cabal & rug detection as an MCP server.** One tool — `check_cabal_risk` — scans any Solana token mint *before your agent buys* and returns an **Exit-Liquidity Risk** verdict (`SAFE | REVIEW | AVOID`), a 0–100 cabal score, funding-cluster detection, same-block Jito-bundle detection, coordinated-dump detection, serial-launcher **deployer history** ("launched 14, 13 dead"), and a Solana-native **honeypot** check (freeze authority + Token-2022 traps). Every flag links to its on-chain evidence transaction.
 
 [![npm](https://img.shields.io/npm/v/cabal-hunter-mcp?color=cb3837&logo=npm)](https://www.npmjs.com/package/cabal-hunter-mcp)
 [![MCP server](https://img.shields.io/badge/MCP-server-7c3aed)](https://api.cabal-hunter.com/mcp)
@@ -53,7 +53,7 @@ Prefer a remote HTTP server (no local process)? Point straight at the hosted end
   "honeypot_risk": "LOW",           // freeze authority + Token-2022 traps
   "mint_authority_revoked": true,
   "freeze_authority_revoked": true,
-  "deployer": { "verdict": "SERIAL_RUGGER", "tokens_launched": 14, "dead": 13 },
+  "deployer": { "verdict": "SERIAL_LAUNCHER", "tokens_launched": 14, "dead": 13 },
   "coordinated_clusters": [
     { "wallets": 5, "combined_pct": 23.1, "evidence_tx": "https://solscan.io/tx/…" }
   ],
