@@ -24,6 +24,9 @@ No install, no signup, no API key — **250 free scans/month per IP**. That's th
 
 ### Claude Desktop / Claude Code / Cursor / VS Code / ElizaOS
 
+![Cabal-Hunter — interactive 3D holder map: crystals sized by supply share, clusters joined by beams, with deployer history and an Exit-Liquidity Risk verdict](demo/screenshot.png)
+
+
 ```json
 {
   "mcpServers": {
@@ -97,7 +100,7 @@ We would rather withdraw a feature than ship a detector that has never demonstra
 - **REST:** `curl "https://api.cabal-hunter.com/api/scan-cabal?mintAddress=<MINT>"` — [OpenAPI spec](https://api.cabal-hunter.com/openapi.json)
 - **ElizaOS plugin:** [`elizaos-plugin-cabal-hunter`](https://github.com/paulf280-ui/plugin-cabal-hunter) (`npm install elizaos-plugin-cabal-hunter`)
 - **MCP template / starter:** [solana-safe-sniper-mcp-template](https://github.com/paulf280-ui/solana-safe-sniper-mcp-template)
-- **Human?** Free interactive bubble map — wallets, Solscan receipts, live chart + trade links on one screen: [api.cabal-hunter.com/map](https://api.cabal-hunter.com/map)
+- **Human?** Free interactive 3D holder map — holders as crystals sized by supply share, clusters joined by beams, with wallets, Solscan receipts, live chart + trade links on one screen: [api.cabal-hunter.com/map](https://api.cabal-hunter.com/map)
 
 ## What it detects (why "contract-clean" misses it)
 
