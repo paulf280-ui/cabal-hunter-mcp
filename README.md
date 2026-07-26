@@ -76,11 +76,19 @@ Prefer a remote HTTP server (no local process)? Point straight at the hosted end
 
 ## A note on the withdrawn `trace_funding` tool
 
-An earlier version of this README documented a second tool, `trace_funding`, that traced a token's first buyers back to their funding source.
+An earlier version of this README documented a second tool, `trace_funding`, that traced a token's first buyers back to their funding source. **It has been withdrawn.** This section is the full record of why, including the parts that make us look bad, because a detector nobody can audit is worth nothing.
 
-**It has been withdrawn.** On measuring it properly we found that its headline detections were an artifact: the "shared funder" it reported was frequently the token's own pump.fun bonding curve. Every seller receives SOL back from the curve, so ordinary buying and selling was being reported as a coordinated cluster. After fixing that, the detector produced **zero genuine detections across 24 tokens**, and on live freshly-graduated tokens it could not complete the trace at all.
+**The first artifact (July 14).** Its headline detections were not real. The "shared funder" it reported was frequently the token's own pump.fun bonding curve: every seller receives SOL back from the curve, so ordinary selling was being reported as a coordinated cluster. A user caught it by checking one of our findings against an independent tool. We were wrong and the other tool was right.
 
-We would rather withdraw a feature than ship a detector that has never demonstrably detected anything. It may return if the approach can be made to work and its detection rate can be shown; until then it is not advertised and not billed.
+**The second artifact (July 26) — the same bug wearing a different hat.** Excluding the bonding curve fixed one *address*, not the *class* of mistake. Measuring 323 launches showed an apparent 15% detection rate that was also an artifact: **17 of the 22 flagged "funders" were the liquidity pool's wrapped-SOL vault**, which likewise pays out to anyone who sells. Two fingerprints gave it away — 192 of 193 "clusters" had *every* member already exited, because the group was, by construction, a list of people who had sold. Checking the flagged address against the listed pair address returns a clean bill of health here, and that clean bill is wrong: the vault is a different address from the pair. The real fix is a class rule — only a System-owned account can be a person.
+
+**Then we found we had been measuring the wrong moment entirely.** The trace took its launch timestamp from the token's listed pair, but for a graduated token the only listed pair is the *post-graduation* one. So every measurement we had ever taken — including the ones above — described buyers at **graduation**, not at launch. The actual claim, that a deployer pre-funds wallets which snipe the mint, had never been tested at all.
+
+**The real test.** We rebuilt it against the bonding curve itself, which is where a launch actually happens, and fixed the coverage problem that had been skipping most tokens. Result on the correct window, with the artifact removed: **zero coordinated clusters across 25 launches**, 18 of which had enough buyers for a cluster to be possible.
+
+**What we found instead is more interesting.** On one representative launch, **1,260 of the bonding curve's 1,266 transactions failed**. The median launch has about **five successful buyers**. These launches are not quietly accumulating cabals — they are sniper races where hundreds of bots compete and a handful win. Because a launch has so few winners, tracing the top ten covers essentially *all* of them, which makes that zero a strong result rather than a thin sample.
+
+We would rather withdraw a feature than ship a detector that has never demonstrably detected anything. It may return if a real signal can be shown; until then it is not advertised and not billed. The scanning that `check_cabal_risk` does — holder concentration, same-block bundles, coordinated dumps, deployer track record, honeypot and exit-liquidity checks — is a separate code path that was never affected by any of this, and it carries the System-owned rule described above.
 
 ## Pricing
 
