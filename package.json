@@ -1,7 +1,7 @@
 {
   "name": "cabal-hunter-mcp",
   "version": "0.1.0",
-  "description": "MCP server for on-chain Solana cabal & rug detection — exit-liquidity risk verdict, funding-cluster + same-block-bundle + coordinated-dump detection, serial-rug deployer history, and honeypot check for any token mint. Run with npx, no API key. 250 free scans/month.",
+    "description": "MCP server for Cabal-Hunter \u2014 Solana token rug & cabal detection for AI agents. Wallet clusters, same-block bundles, deployer track record with peak market caps, honeypot and authority traps. 5 free scans/month, or 250 with a free key. Card, USDC or x402.",
   "type": "module",
   "bin": {
     "cabal-hunter-mcp": "index.js"
