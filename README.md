@@ -5,7 +5,7 @@
 [![npm](https://img.shields.io/npm/v/cabal-hunter-mcp?color=cb3837&logo=npm)](https://www.npmjs.com/package/cabal-hunter-mcp)
 [![MCP server](https://img.shields.io/badge/MCP-server-7c3aed)](https://api.cabal-hunter.com/mcp)
 [![Solana](https://img.shields.io/badge/Solana-on--chain-14F195)](https://api.cabal-hunter.com)
-[![Free tier](https://img.shields.io/badge/250%2Fmo%20free-no%20API%20key-10b981)](https://api.cabal-hunter.com/api/info)
+[![Free tier](https://img.shields.io/badge/5%2Fmo%20free-250%20with%20a%20key-10b981)](https://api.cabal-hunter.com/api/info)
 [![License: MIT](https://img.shields.io/badge/license-MIT-94a3b8)](LICENSE)
 
 > 🌐 **Available in 9 languages:** [English](https://api.cabal-hunter.com/) · [Español](https://api.cabal-hunter.com/es) · [Português](https://api.cabal-hunter.com/pt) · [Français](https://api.cabal-hunter.com/fr) · [Deutsch](https://api.cabal-hunter.com/de) · [Nederlands](https://api.cabal-hunter.com/nl) · [中文](https://api.cabal-hunter.com/zh) · [日本語](https://api.cabal-hunter.com/ja) · [한국어](https://api.cabal-hunter.com/ko)
@@ -20,7 +20,7 @@ Contract-clean is **not** cabal-clean. A basic scanner tells you the mint/freeze
 npx cabal-hunter-mcp
 ```
 
-No install, no signup, no API key — **250 free scans/month per IP**. That's the whole setup; the command below is what you drop into any MCP client.
+No install, no signup — **5 free scans/month**, or **250/month with a free key** (one email). That's the whole setup; the command below is what you drop into any MCP client.
 
 ### Claude Desktop / Claude Code / Cursor / VS Code / ElizaOS
 
@@ -92,8 +92,8 @@ We would rather withdraw a feature than ship a detector that has never demonstra
 
 ## Pricing
 
-- **250 scans/month per IP — free, no key.**
-- After that: **$9/month for Unlimited** (fair use), or pay-as-you-go at **$0.001 USDC per scan** (priced at cost). No signup, no card.
+- **5 scans/month free with no account**, or **250/month with a free key** (one email).
+- After that: **$9/month for Unlimited** (fair use), or pay-as-you-go at **$0.001 per scan** (priced at cost). Pay by card, in USDC on Solana, or via x402 — same price through every door. Card subscriptions renew automatically and can be cancelled anytime at [cabal-hunter.com/billing](https://cabal-hunter.com/billing).
 - Prepaid key: send USDC, `POST /api/buy-key`, then set `CABAL_HUNTER_API_KEY` (sent as the `X-API-Key` header). Full details: [api.cabal-hunter.com/pricing](https://api.cabal-hunter.com/pricing).
 
 ## Configuration
