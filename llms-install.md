@@ -1,7 +1,8 @@
 # Installing cabal-hunter-mcp (guide for AI coding agents)
 
 This is a **zero-config** MCP server. No API key and no build step are required
-for the free tier (250 scans/month per IP).
+for the free tier (5 scans/month with no key; 250/month with a free key, one
+email, from https://api.cabal-hunter.com/pricing).
 
 ## Install
 
@@ -43,8 +44,9 @@ an `env` block:
 
 The server exposes one tool: **`check_cabal_risk`**. Call it with any Solana
 mint address to confirm — e.g. `DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263`
-(BONK). A successful call returns JSON containing `recommendation`
-(`SAFE | REVIEW | AVOID`) and a `cabal_score` (0-100).
+(BONK). A successful call returns JSON containing `risk_level`
+(`LOW_SIGNAL | ELEVATED | HIGH`), a `cabal_score` (0-100) and `honeypot_risk`.
+A live trace takes 15-20s, so allow at least a 30s timeout.
 
 ## Requirements
 

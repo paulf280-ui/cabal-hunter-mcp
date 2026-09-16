@@ -1,6 +1,6 @@
 # cabal-hunter-mcp
 
-**On-chain Solana cabal & rug detection as an MCP server.** One tool — `check_cabal_risk` — scans any Solana token mint *before your agent buys* and returns an **Exit-Liquidity Risk** verdict (`SAFE | REVIEW | AVOID`), a 0–100 cabal score, funding-cluster detection, same-block Jito-bundle detection, coordinated-dump detection, serial-launcher **deployer history** ("launched 14, 13 dead"), and a Solana-native **honeypot** check (freeze authority + Token-2022 traps). Every flag links to its on-chain evidence transaction.
+**On-chain Solana cabal & rug detection as an MCP server.** One tool — `check_cabal_risk` — scans any Solana token mint *before your agent buys* and returns an **Exit-Liquidity Risk** verdict (`risk_level`: `LOW_SIGNAL | ELEVATED | HIGH`), a 0–100 cabal score, funding-cluster detection, same-block Jito-bundle detection, same-block coordinated-selling detection, serial-launcher **deployer history** ("launched 92, 90 dead"), and a Solana-native **honeypot** check (freeze authority + Token-2022 traps). Every wallet cluster carries `evidence_txs` — the signatures behind that cluster, checkable on Solscan.
 
 [![npm](https://img.shields.io/npm/v/cabal-hunter-mcp?color=cb3837&logo=npm)](https://www.npmjs.com/package/cabal-hunter-mcp)
 [![MCP server](https://img.shields.io/badge/MCP-server-7c3aed)](https://api.cabal-hunter.com/mcp)
@@ -12,7 +12,7 @@
 
 Contract-clean is **not** cabal-clean. A basic scanner tells you the mint/freeze/LP are fine — it doesn't tell you that 15 wallets funded from one source are holding 30% of supply, waiting to dump on you.
 
-**Credit where it's due:** [RugCheck](https://rugcheck.xyz) also does same-source wallet clustering (their "Insider Networks"), and it's a good tool — if it does what you need, genuinely, use it. What this gives you is one fused exit-liquidity verdict in a single call, at $9/month with no account.
+**Credit where it's due:** RugCheck also does same-source wallet clustering (their "Insider Networks"), and it's a good tool — if it does what you need, genuinely, use it. What this gives you is one fused exit-liquidity verdict in a single call, at $9/month with no account.
 
 ## Quick start
 
@@ -50,25 +50,37 @@ Prefer a remote HTTP server (no local process)? Point straight at the hosted end
 
 ```jsonc
 {
-  "recommendation": "AVOID",        // SAFE | REVIEW | AVOID  ← the headline
-  "risk": "HIGH",                   // exit-liquidity risk
-  "cabal_score": 100,               // 0-100
+  "recommendation": "AVOID",        // SAFE | REVIEW | AVOID — deprecated, kept for existing bots
+  "risk_level": "HIGH",             // LOW_SIGNAL | ELEVATED | HIGH — prefer this one
+  "risk": "HIGH",                   // COORDINATION ONLY. Not a whole-token all-clear.
+  "cabal_score": 93.8,              // 0-100, coordination only — read honeypot_risk too
   "honeypot_risk": "LOW",           // freeze authority + Token-2022 traps
   "mint_authority_revoked": true,
   "freeze_authority_revoked": true,
-  "deployer": { "verdict": "SERIAL_LAUNCHER", "tokens_launched": 14, "dead": 13 },
+  "deployer": { "verdict": "SERIAL_LAUNCHER", "tokens_launched": 92, "dead": 90, "sampled": 90 },
   "coordinated_clusters": [
-    { "wallets": 5, "combined_pct": 23.1, "evidence_tx": "https://solscan.io/tx/…" }
+    { "type": "coordinated_exit",   // or "funding" / "time_sync"
+      "wallet_count": 2, "combined_pct": 3.4, "risk": "HIGH",
+      "evidence_txs": ["sEWHzDWmaBqn…", "3c9GRqHbf2nh…"] }
   ],
-  "time_sync": true,                // same-block (Jito-bundled) buys
-  "coordinated_exit": false,        // ≥2 holders dumped together
+  "time_sync": false,               // same-block (Jito-bundled) buys
+  "coordinated_exit": true,         // ≥2 holders sold in the same block
   "top_reasons": ["..."],
-  "wallets_checked": 15,
-  "scan_complete": true
+  "wallets_checked": 12,
+  "scan_complete": true,
+  "computed_at": 1789530296         // unix seconds — when this trace actually ran
 }
 ```
 
-`scan_complete` / `wallets_checked` are included on purpose so your agent can apply **its own** risk tolerance instead of inheriting ours — the score is a starting point you can verify (every cluster carries an `evidence_tx`), not a verdict you take on faith.
+`evidence_txs` are raw transaction signatures, and they hang off **wallet clusters**. Holder
+concentration, deployer history and the honeypot checks are read from chain state, so they
+carry no transaction of their own — a token can score `HIGH` with no clusters at all.
+
+**Freshness:** a mint traced in the last 8 hours is answered from that trace in <100ms;
+`computed_at` says exactly when. Anything else runs a live on-chain trace and takes 15-20s, so
+set your client timeout to 30s or more.
+
+`scan_complete` / `wallets_checked` are included on purpose so your agent can apply **its own** risk tolerance instead of inheriting ours — the score is a starting point you can verify (every cluster carries `evidence_txs[]`), not a verdict you take on faith.
 
 ### Gate a buy in your agent
 
@@ -88,7 +100,7 @@ An earlier version of this README documented a second tool, `trace_funding`, tha
 
 **What we found instead is more interesting.** On one representative launch, **1,260 of the bonding curve's 1,266 transactions failed**. The median launch has about **five successful buyers**. These launches are not quietly accumulating cabals — they are sniper races where hundreds of bots compete and a handful win. Because a launch has so few winners, tracing the top ten covers essentially *all* of them, which makes that zero a strong result rather than a thin sample.
 
-We would rather withdraw a feature than ship a detector that has never demonstrably detected anything. It may return if a real signal can be shown; until then it is not advertised and not billed. The scanning that `check_cabal_risk` does — holder concentration, same-block bundles, coordinated dumps, deployer track record, honeypot and exit-liquidity checks — is a separate code path that was never affected by any of this, and it carries the System-owned rule described above.
+We would rather withdraw a feature than ship a detector that has never demonstrably detected anything. It may return if a real signal can be shown; until then it is not advertised and not billed. The scanning that `check_cabal_risk` does — holder concentration, same-block bundles, same-block coordinated selling, deployer track record, honeypot and exit-liquidity checks — is a separate code path that was never affected by any of this, and it carries the System-owned rule described above.
 
 ## Pricing
 
@@ -108,6 +120,7 @@ We would rather withdraw a feature than ship a detector that has never demonstra
 - **REST:** `curl "https://api.cabal-hunter.com/api/scan-cabal?mintAddress=<MINT>"` — [OpenAPI spec](https://api.cabal-hunter.com/openapi.json)
 - **ElizaOS plugin:** [`elizaos-plugin-cabal-hunter`](https://github.com/paulf280-ui/plugin-cabal-hunter) (`npm install elizaos-plugin-cabal-hunter`)
 - **MCP template / starter:** [solana-safe-sniper-mcp-template](https://github.com/paulf280-ui/solana-safe-sniper-mcp-template)
+- **Telegram:** [@TheCabalHunter_Bot](https://t.me/TheCabalHunter_Bot) — paste a mint, get the same scan as a card, watch a token you hold and get a message when it starts dumping. Alerts channel: [@CabalHunterAlerts](https://t.me/CabalHunterAlerts).
 - **Human?** Free interactive 3D holder map — holders as crystals sized by supply share, clusters joined by beams, with wallets, Solscan receipts, live chart + trade links on one screen: [api.cabal-hunter.com/map](https://api.cabal-hunter.com/map)
 
 ## What it detects (why "contract-clean" misses it)
