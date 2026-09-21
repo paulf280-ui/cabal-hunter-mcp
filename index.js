@@ -31,7 +31,8 @@ const TOOL = {
     "On-chain coordinated-wallet (cabal) and rug detection for any Solana token " +
     "mint. One call returns risk_level (LOW_SIGNAL | ELEVATED | HIGH), a 0-100 " +
     "cabal score, funding-cluster detection (top holders walked back to a shared " +
-    "funding wallet), same-block Jito-bundle detection, same-block coordinated " +
+    "funding wallet), same-block bundle detection (slot-based: a Jito bundle is " +
+    "one way to buy in a single slot, not the only one), same-block coordinated " +
     "selling, serial-launcher deployer history (e.g. 'launched 92, 90 dead'), and " +
     "a honeypot check (freeze authority + Token-2022 traps). Wallet clusters carry " +
     "evidence_txs[] \u2014 the signatures behind that cluster; concentration, deployer " +

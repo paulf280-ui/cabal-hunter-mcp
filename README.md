@@ -1,6 +1,6 @@
 # cabal-hunter-mcp
 
-**On-chain Solana cabal & rug detection as an MCP server.** One tool — `check_cabal_risk` — scans any Solana token mint *before your agent buys* and returns an **Exit-Liquidity Risk** verdict (`risk_level`: `LOW_SIGNAL | ELEVATED | HIGH`), a 0–100 cabal score, funding-cluster detection, same-block Jito-bundle detection, same-block coordinated-selling detection, serial-launcher **deployer history** ("launched 92, 90 dead"), and a Solana-native **honeypot** check (freeze authority + Token-2022 traps). Every wallet cluster carries `evidence_txs` — the signatures behind that cluster, checkable on Solscan.
+**On-chain Solana cabal & rug detection as an MCP server.** One tool — `check_cabal_risk` — scans any Solana token mint *before your agent buys* and returns an **Exit-Liquidity Risk** verdict (`risk_level`: `LOW_SIGNAL | ELEVATED | HIGH`), a 0–100 cabal score, funding-cluster detection, same-block bundle detection (slot-based), same-block coordinated-selling detection, serial-launcher **deployer history** ("launched 92, 90 dead"), and a Solana-native **honeypot** check (freeze authority + Token-2022 traps). Every wallet cluster carries `evidence_txs` — the signatures behind that cluster, checkable on Solscan.
 
 [![npm](https://img.shields.io/npm/v/cabal-hunter-mcp?color=cb3837&logo=npm)](https://www.npmjs.com/package/cabal-hunter-mcp)
 [![MCP server](https://img.shields.io/badge/MCP-server-7c3aed)](https://api.cabal-hunter.com/mcp)
@@ -63,7 +63,7 @@ Prefer a remote HTTP server (no local process)? Point straight at the hosted end
       "wallet_count": 2, "combined_pct": 3.4, "risk": "HIGH",
       "evidence_txs": ["sEWHzDWmaBqn…", "3c9GRqHbf2nh…"] }
   ],
-  "time_sync": false,               // same-block (Jito-bundled) buys
+  "time_sync": false,               // same-block buys (a Jito bundle is one way, not the only one)
   "coordinated_exit": true,         // ≥2 holders sold in the same block
   "top_reasons": ["..."],
   "wallets_checked": 12,
