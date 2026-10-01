@@ -105,7 +105,7 @@ We would rather withdraw a feature than ship a detector that has never demonstra
 ## Pricing
 
 - **5 scans/month free with no account**, or **250/month with a free key** (one email).
-- After that: **$9/month for Unlimited** (fair use), or pay-as-you-go at **$0.001 per scan** (priced at cost). Pay by card, in USDC on Solana, or via x402 — same price through every door. Card subscriptions renew automatically and can be cancelled anytime at [cabal-hunter.com/billing](https://cabal-hunter.com/billing).
+- After that: **$9/month for 2,500 scans, or $99/month for Unlimited** (fair use), or pay-as-you-go at **$0.01 per scan**. Pay by card, in USDC on Solana, or via x402 — same price through every door. Card subscriptions renew automatically and can be cancelled anytime at [cabal-hunter.com/billing](https://cabal-hunter.com/billing).
 - Prepaid key: send USDC, `POST /api/buy-key`, then set `CABAL_HUNTER_API_KEY` (sent as the `X-API-Key` header). Full details: [api.cabal-hunter.com/pricing](https://api.cabal-hunter.com/pricing).
 
 ## Configuration
