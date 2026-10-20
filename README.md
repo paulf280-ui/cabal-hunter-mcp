@@ -120,7 +120,10 @@ We would rather withdraw a feature than ship a detector that has never demonstra
 - **REST:** `curl "https://api.cabal-hunter.com/api/scan-cabal?mintAddress=<MINT>"` — [OpenAPI spec](https://api.cabal-hunter.com/openapi.json)
 - **ElizaOS plugin:** [`elizaos-plugin-cabal-hunter`](https://github.com/paulf280-ui/plugin-cabal-hunter) (`npm install elizaos-plugin-cabal-hunter`)
 - **MCP template / starter:** [solana-safe-sniper-mcp-template](https://github.com/paulf280-ui/solana-safe-sniper-mcp-template)
-- **Telegram:** [@TheCabalHunter_Bot](https://t.me/TheCabalHunter_Bot) — paste a mint, get the same scan as a card, watch a token you hold and get a message when it starts dumping. Alerts channel: [@CabalHunterAlerts](https://t.me/CabalHunterAlerts).
+- **Telegram:** [@TheCabalHunter_Bot](https://t.me/TheCabalHunter_Bot) — paste a mint for the scan as a card (including who bought in the first seconds after launch, and how many of them did the same on 50+ other launches we recorded), watch a token you hold for a dump alert, follow a dev to hear when it launches again, and `/wallet <address>` for a wallet case file. Free alerts channel: [@CabalHunterAlerts](https://t.me/CabalHunterAlerts).
+- **Chrome extension:** [Cabal Hunter in the Chrome Web Store](https://chromewebstore.google.com/detail/alkkongloagiciecbehakbjaehmianci) — opens in Chrome's side panel beside your trading terminal and reads the token, or the wallet, you are looking at, with every finding linked to its transaction.
+- **Wallet case files:** [cabal-hunter.com/wallet](https://cabal-hunter.com/wallet) — paste any wallet (a free key gives 10 lookups a month): the launches it bought in the first seconds, who it moves money with and where its funding came from. Plus a daily case file of a launch we watched live.
+- **Pro investigations ($99/month):** [cabal-hunter.com/investigate](https://cabal-hunter.com/investigate) — who keeps buying right before a given wallet, and its funding walked back until it reaches a labelled exchange.
 - **Human?** Free interactive 3D holder map — holders as crystals sized by supply share, clusters joined by beams, with wallets, Solscan receipts, live chart + trade links on one screen: [api.cabal-hunter.com/map](https://api.cabal-hunter.com/map)
 
 ## What it detects (why "contract-clean" misses it)
